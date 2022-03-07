@@ -2,7 +2,7 @@
 
 This project is base on https://github.com/kuangliu/pytorch-cifar
 
-The major functions as follow
+The major functions as follow \
 1.Do transfer learning with custom dataset \
 2.Inference by TensorRT \
 3.Inference by TensorRT C++ API \
