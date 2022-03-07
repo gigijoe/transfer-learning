@@ -3,13 +3,13 @@
 This project is base on https://github.com/kuangliu/pytorch-cifar
 
 The major functions as follow
-1.Do transfer learning with custom dataset
-2.Inference by TensorRT 
-3.Inference by TensorRT C++ API
+1.Do transfer learning with custom dataset \
+2.Inference by TensorRT \
+3.Inference by TensorRT C++ API \
 
 ## Getting started
 
-The custom train dataset (pictures) are in the sub folder data/
+The custom train dataset (pictures) are in the sub folder data/ \
 There are only two classes, Glider and Paraglider.
 ```
 $ tree -d data
