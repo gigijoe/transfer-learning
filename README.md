@@ -1,13 +1,63 @@
-# Transfer Learning
+# Pytorch Transfer Learning
 
 This project is base on https://github.com/kuangliu/pytorch-cifar
 
 The major functions as follow \
-1.Do transfer learning with custom dataset \
+1.Do transfer learning base on model ResNet50 with custom dataset \
 2.Inference by TensorRT \
 3.Inference by TensorRT C++ API \
 
 ## Getting started
+
+Clone from github
+```
+git clone https://github.com/gigijoe/transfer-learning.git
+cd transfer-learning/
+git submodule update --init --recursive
+
+```
+
+Go to folder ./pytorch-cifar and change model to ResNet50
+```
+cd pytorch-cifar/
+vi main.py
+``` 
+
+ResNet50
+```
+@@ -55,7 +55,7 @@
+ # Model
+ print('==> Building model..')
+ # net = VGG('VGG19')
+-# net = ResNet18()
++net = ResNet50()
+ # net = PreActResNet18()
+ # net = GoogLeNet()
+ # net = DenseNet121()
+@@ -68,7 +68,7 @@
+ # net = ShuffleNetV2(1)
+ # net = EfficientNetB0()
+ # net = RegNetX_200MF()
+-net = SimpleDLA()
++# net = SimpleDLA()
+ net = net.to(device)
+ if device == 'cuda':
+     net = torch.nn.DataParallel(net)
+
+```
+
+Start training with
+```
+python main.py
+```
+The trained model will be stored to ./checkpoint/ckpt.pth
+
+## Transfer learning
+
+Go back to root folder
+```
+cd ../
+```
 
 The custom train dataset (pictures) are in the sub folder data/ \
 There are only two classes, Glider and Paraglider.
@@ -127,17 +177,17 @@ https://github.com/wdhao/tensorRT_Wheels
 ### Jetson nano
 
 wget https://nvidia.box.com/shared/static/fjtbno0vpo676a25cgvuqc1wty0fkkg6.whl -O torch-1.10.0-cp36-cp36m-linux_aarch64.whl
-pip3 install torch-1.10.0-cp36-cp36m-linux_aarch64.whl
+pip3 install torch-1.10.0-cp36-cp36m-linux_aarch64.whl \
 
-PATH="/usr/local/cuda/bin:${PATH}"
-LD_LIBRARY_PATH="/usr/local/cuda/lib64:${LD_LIBRARY_PATH}"
+PATH="/usr/local/cuda/bin:${PATH}" \
+LD_LIBRARY_PATH="/usr/local/cuda/lib64:${LD_LIBRARY_PATH}" \
 
-pip3 install pycuda six --verbose
+pip3 install pycuda six --verbose \
 
-sudo apt-get install libopenblas-base libopenmpi-dev
-pip3 install matplotlib
-pip3 install albumentations==0.5.2
-pip3 install torchsummary
+sudo apt-get install libopenblas-base libopenmpi-dev \
+pip3 install matplotlib \
+pip3 install albumentations==0.5.2 \
+pip3 install torchsummary \
 
 ### Softmax v.s. LogSoftmax
 
