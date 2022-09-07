@@ -52,6 +52,26 @@ python main.py
 ```
 The trained model will be stored to ./checkpoint/ckpt.pth
 
+If there's CUDA out of memory error, try reduce batch_size
+```
+RuntimeError: CUDA out of memory. Tried to allocate 64.00 MiB (GPU 0; 3.95 GiB total capacity; 3.20 GiB already allocated; 7.12 MiB free; 3.29 GiB reserved in total by PyTorch)
+```
+
+@@ -40,14 +40,14 @@
+ ])
+ 
+ trainset = torchvision.datasets.CIFAR10(
+    root='./data', train=True, download=True, transform=transform_train)
+ trainloader = torch.utils.data.DataLoader(
+-    trainset, batch_size=64, shuffle=True, num_workers=2)
++    trainset, batch_size=128, shuffle=True, num_workers=2)
+ 
+ testset = torchvision.datasets.CIFAR10(
+    root='./data', train=False, download=True, transform=transform_test)
+ testloader = torch.utils.data.DataLoader(
+-    testset, batch_size=50, shuffle=False, num_workers=2)
++    testset, batch_size=100, shuffle=False, num_workers=2)
+
 ## Transfer learning
 
 Go back to root folder
@@ -117,11 +137,19 @@ https://github.com/spmallick/learnopencv/blob/master/Image-Classification-in-PyT
 
 ## TensorRT
 
+Enable tensorrt environment 
+
+```
+cd ~/venv/
+source tensorrt/bin/activate
+export LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libgomp.so.1
+```
+
 Generate file model.engine from model.onnx and speed up inference by TensorRT 
 
 From https://github.com/keras-team/keras-tuner/issues/317
 ```
-export LD_PRELOAD=/usr/lib/aarch64-linux-gnu/libgomp.so.1
+export LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libgomp.so.1
 ```
 
 Load file model.onnx and export to model.engine
